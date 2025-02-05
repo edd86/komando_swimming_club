@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:komando_swimming_club/core/constants/app_fonts.dart';
 import 'package:komando_swimming_club/core/constants/app_routes.dart';
+import 'package:komando_swimming_club/core/constants/global_variables.dart';
+import 'package:komando_swimming_club/data/data_sources/db_helper.dart';
+import 'package:komando_swimming_club/data/repositories/user_repository_impl.dart';
 import 'package:komando_swimming_club/presentation/provider/theme_style_provider.dart';
+import 'package:komando_swimming_club/presentation/widgets/general_widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
@@ -112,18 +116,37 @@ class _LoginPageState extends State<LoginPage> {
                       Consumer<ThemeStyleProvider>(
                           builder: (context, themeProvider, child) {
                         return ElevatedButton.icon(
-                          label: Text('Iniciar sesión'),
+                          label: Text('Iniciar sesión',
+                              style: AppFonts.textButtonStyle()),
                           icon: Icon(
                             Icons.login_rounded,
                             color: themeProvider.isDark
                                 ? Colors.black
                                 : Colors.white,
                           ),
-                          onPressed: () {},
+                          onPressed: () async {
+                            final userRepo =
+                                UserRepositoryImpl(db: await DbHelper().db);
+                            final response = await userRepo.getUserLogged(
+                                _usernameController.text,
+                                _passwordController.text);
+                            if (response != null) {
+                              if (response) {
+                                userLogged = await userRepo.getUserByUserName(
+                                    _usernameController.text);
+                                _loginUser();
+                              } else {
+                                _loginNotUser();
+                              }
+                            } else {
+                              _loginError();
+                            }
+                          },
                         );
                       }),
                       TextButton(
-                        child: Text('Registrarse'),
+                        child: Text('Registrarse',
+                            style: AppFonts.textButtonStyle()),
                         onPressed: () => Navigator.pushNamed(
                           context,
                           AppRoutes.registerUserRoute,
@@ -154,5 +177,18 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  void _loginUser() {
+    GeneralWidgets.showSnackBar(context, 'Bienvenido a Komando');
+    Navigator.pushNamed(context, AppRoutes.homeRoute);
+  }
+
+  void _loginError() {
+    GeneralWidgets.showSnackBar(context, 'Error al iniciar sesión');
+  }
+
+  void _loginNotUser() {
+    GeneralWidgets.showSnackBar(context, 'Usuario o contraseña incorrectos');
   }
 }

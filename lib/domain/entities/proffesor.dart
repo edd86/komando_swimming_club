@@ -3,9 +3,9 @@ class Proffesor {
   String name;
   int age;
   String phone;
-  String dateOfBirth;
-  String beginDate;
-  String obs;
+  DateTime dateOfBirth;
+  DateTime beginDate;
+  String? obs;
 
   Proffesor({
     this.id,
@@ -14,6 +14,6 @@ class Proffesor {
     required this.phone,
     required this.dateOfBirth,
     required this.beginDate,
-    required this.obs,
+    this.obs,
   });
 }

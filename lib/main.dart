@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:komando_swimming_club/core/constants/app_routes.dart';
 import 'package:komando_swimming_club/core/constants/app_theme.dart';
 import 'package:komando_swimming_club/data/data_sources/db_helper.dart';
+import 'package:komando_swimming_club/presentation/provider/proffesor_provider.dart';
 import 'package:komando_swimming_club/presentation/provider/theme_style_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
@@ -18,6 +19,9 @@ void main() async {
               providers: [
                 ChangeNotifierProvider<ThemeStyleProvider>(
                   create: (context) => ThemeStyleProvider(),
+                ),
+                ChangeNotifierProvider<ProffesorProvider>(
+                  create: (context) => ProffesorProvider(db: db),
                 )
               ],
               child: const MainApp(),
@@ -31,14 +35,15 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Sizer(builder: (context, orientation, deviceType) {
-      return Consumer<ThemeStyleProvider>(builder: (context, themeProvider, child) {
+      return Consumer<ThemeStyleProvider>(
+          builder: (context, themeProvider, child) {
         return MaterialApp(
-        title: 'Komando Swimming Club',
-        routes: AppRoutes.routes,
-        debugShowCheckedModeBanner: false,
-        initialRoute: AppRoutes.splashRoute,
-        theme: themeProvider.isDark ? AppTheme.dark : AppTheme.light,
-      );
+          title: 'Komando Swimming Club',
+          routes: AppRoutes.routes,
+          debugShowCheckedModeBanner: false,
+          initialRoute: AppRoutes.splashRoute,
+          theme: themeProvider.isDark ? AppTheme.dark : AppTheme.light,
+        );
       });
     });
   }

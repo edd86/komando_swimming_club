@@ -12,4 +12,9 @@ class AppFonts {
         fontSize: 15.sp,
         fontWeight: FontWeight.w600,
       );
+
+  static textButtonStyle() => GoogleFonts.firaSansCondensed(
+        fontSize: 15.sp,
+        fontWeight: FontWeight.bold,
+  );
 }
