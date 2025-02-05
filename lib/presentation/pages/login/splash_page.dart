@@ -1,0 +1,24 @@
+import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:komando_swimming_club/presentation/pages/login/login_page.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:sizer/sizer.dart';
+
+class SplashPage extends StatelessWidget {
+  const SplashPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedSplashScreen(
+      splash: Image.asset(
+        'assets/images/icono.png',
+      ),
+      splashIconSize: 35.h,
+      duration: 2500,
+      backgroundColor: Colors.black54,
+      nextScreen: const LoginPage(),
+      splashTransition: SplashTransition.scaleTransition,
+      pageTransitionType: PageTransitionType.rightToLeft,
+    );
+  }
+}
