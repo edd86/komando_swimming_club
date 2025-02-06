@@ -4,12 +4,14 @@ import 'package:komando_swimming_club/data/data_sources/db_helper.dart';
 import 'package:komando_swimming_club/data/repositories/assitance_repository_impl.dart';
 import 'package:komando_swimming_club/domain/entities/assistance.dart';
 import 'package:komando_swimming_club/domain/entities/proffesor.dart';
+import 'package:komando_swimming_club/domain/entities/student.dart';
 import 'package:komando_swimming_club/presentation/widgets/general_widgets.dart';
 import 'package:sizer/sizer.dart';
 
 class AssistantDialogWidget extends StatefulWidget {
   final Proffesor? proffesor;
-  const AssistantDialogWidget({this.proffesor, super.key});
+  final Student? student;
+  const AssistantDialogWidget({this.proffesor, this.student, super.key});
 
   @override
   State<AssistantDialogWidget> createState() => _AssistantDialogWidgetState();
@@ -24,11 +26,14 @@ class _AssistantDialogWidgetState extends State<AssistantDialogWidget> {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(
-        widget.proffesor!.name,
+        widget.proffesor == null
+            ? widget.student!.name
+            : widget.proffesor!.name,
         style: AppFonts.textCardTitleStyle(),
+        textAlign: TextAlign.center,
       ),
       content: SizedBox(
-        height: 15.h,
+        height: 22.h,
         child: Column(
           children: _states.map((state) {
             return RadioListTile<String>(
@@ -64,6 +69,24 @@ class _AssistantDialogWidgetState extends State<AssistantDialogWidget> {
               );
               final response =
                   await assitanceRepo.addTeacherAssitance(newAssitance);
+              if (response != null) {
+                response.id != null
+                    ? _assistanceAdded()
+                    : _assistanceNotAdded();
+              } else {
+                _assistanceError();
+              }
+            }
+            if (widget.student != null) {
+              final assitanceRepo =
+                  AssitanceRepositoryImpl(db: await DbHelper().db);
+              final newAssitance = Assistance(
+                dateIn: DateTime.now(),
+                state: _stateSelected.toLowerCase(),
+                studentId: widget.student!.id!,
+              );
+              final response =
+                  await assitanceRepo.addStudentAssitance(newAssitance);
               if (response != null) {
                 response.id != null
                     ? _assistanceAdded()

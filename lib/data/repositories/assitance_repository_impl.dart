@@ -8,9 +8,15 @@ class AssitanceRepositoryImpl implements AssistanceRepository {
   final Database db;
   AssitanceRepositoryImpl({required this.db});
   @override
-  Future<Assistance?> addStudentAssitance(Assistance assistance) {
-    // TODO: implement addStudentAssitance
-    throw UnimplementedError();
+  Future<Assistance?> addStudentAssitance(Assistance assistance) async {
+    try {
+      final id = await db.insert('asistencias',
+          AssistanceMapper().assitanceToModel(assistance).toJson());
+      return AssistanceMapper().modelToAssitance(
+          AssistanceMapper().assitanceToModel(assistance).copyWith(id: id));
+    } catch (e) {
+      return null;
+    }
   }
 
   @override
@@ -29,7 +35,8 @@ class AssitanceRepositoryImpl implements AssistanceRepository {
   Future<int?> editTeacherAssitanceOut(Assistance assistance) async {
     try {
       final assistances = await db.query('asistencias',
-          where: 'profesorId = ? AND fecha_salida IS NULL AND estado = "presente"',
+          where:
+              'profesorId = ? AND fecha_salida IS NULL AND estado = "presente"',
           whereArgs: [assistance.proffesorId]);
       if (assistances.isNotEmpty) {
         final assistanceFound =
@@ -51,6 +58,38 @@ class AssitanceRepositoryImpl implements AssistanceRepository {
       }
       return 0;
     } catch (e) {
+      return null;
+    }
+  }
+
+  @override
+  Future<int?> editStudentAssitanceOut(Assistance assistance) async {
+    try {
+      final assistances = await db.query('asistencias',
+          where:
+              'alumnoId = ? AND fecha_salida IS NULL AND estado = "presente"',
+          whereArgs: [assistance.studentId]);
+      if (assistances.isNotEmpty) {
+        final assistanceFound =
+            AssitanceModel.fromJson(assistances.last).copyWith(
+          id: assistance.id,
+          dateIn: assistance.dateIn,
+          dateOut: assistance.dateOut,
+          state: assistance.state,
+          obs: assistance.obs,
+          studentId: assistance.studentId,
+          proffesorId: assistance.proffesorId,
+        );
+        return await db.update(
+          'asistencias',
+          assistanceFound.toJson(),
+          where: 'id = ?',
+          whereArgs: [assistanceFound.id],
+        );
+      }
+      return 0;
+    } catch (e) {
+      print(e.toString());
       return null;
     }
   }

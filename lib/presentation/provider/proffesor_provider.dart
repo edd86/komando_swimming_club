@@ -20,4 +20,11 @@ class ProffesorProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  void searchProffesor(String search) {
+    _proffesors = _proffesors
+        .where((proffessor) => proffessor.name.contains(search))
+        .toList();
+    notifyListeners();
+  }
 }

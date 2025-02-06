@@ -174,7 +174,7 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 SizedBox(
-                  height: 8.h,
+                  height: 10.h,
                   child: Column(
                     children: [
                       Icon(FontAwesomeIcons.cakeCandles),
@@ -189,7 +189,7 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
                   ),
                 ),
                 SizedBox(
-                  height: 8.h,
+                  height: 10.h,
                   child: Column(
                     children: [
                       Icon(FontAwesomeIcons.calendarDay),
