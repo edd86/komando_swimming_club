@@ -3,8 +3,8 @@ class Student {
   String name;
   int age;
   String phone;
-  String dateOfBirth;
-  String dateOfRegister;
+  DateTime dateOfBirth;
+  DateTime dateOfRegister;
   String obs;
   String ppff;
   int profesorId;

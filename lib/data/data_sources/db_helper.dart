@@ -1,20 +1,32 @@
+import 'dart:async';
+
 import 'package:komando_swimming_club/data/data_sources/sqlite_code.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DbHelper {
-  static final DbHelper _instance = DbHelper._instance;
-
+  static final DbHelper _instance = DbHelper._();
   static Database? _db;
+
+  DbHelper._();
+
+  factory DbHelper() {
+    return _instance;
+  }
 
   Future<Database> get db async {
     _db ??= await _initDb('swimming_database.db');
     return _db!;
   }
 
-  _initDb(String dbName) async {
+  Future<Database> _initDb(String dbName) async {
     final path = await getDatabasesPath();
     final dbPath = '$path/$dbName';
-    return await openDatabase(dbPath, version: 1, onCreate: _createDb);
+    return await openDatabase(
+      dbPath,
+      version: 1,
+      onCreate: _createDb,
+      onUpgrade: _upgradeDatabase,
+    );
   }
 
   Future<void> _createDb(Database db, int version) async {
@@ -27,5 +39,9 @@ class DbHelper {
     await db.execute(sqlAsistencias);
     await db.execute(sqlRegistros);
     await db.execute(sqlRegistroLogs);
+  }
+  
+  Future<void> _upgradeDatabase(Database db, int oldVersion, int newVersion) async{
+
   }
 }

@@ -11,7 +11,7 @@ class SplashPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedSplashScreen(
       splash: Image.asset(
-        'assets/images/icono.png',
+        'assets/images/logo_comando.png',
       ),
       splashIconSize: 35.h,
       duration: 2500,

@@ -5,7 +5,7 @@ class GeneralWidgets {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(message),
-          duration: Duration(seconds: 3),
+          duration: Duration(seconds: 5),
           backgroundColor: Colors.green[800],
         ),
       );

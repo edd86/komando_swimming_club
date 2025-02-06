@@ -3,8 +3,8 @@ class StudentModel {
   String name;
   int age;
   String phone;
-  String dateOfBirth;
-  String dateOfRegister;
+  DateTime dateOfBirth;
+  DateTime dateOfRegister;
   String obs;
   String ppff;
   int profesorId;
@@ -27,8 +27,8 @@ class StudentModel {
       name: json['name'],
       age: json['edad'],
       phone: json['phone'],
-      dateOfBirth: json['dateOfBirth'],
-      dateOfRegister: json['dateOfRegister'],
+      dateOfBirth: DateTime.parse(json['dateOfBirth']),
+      dateOfRegister: DateTime.parse(json['dateOfRegister']),
       obs: json['obs'],
       ppff: json['ppff'],
       profesorId: json['profesorId'],
@@ -41,11 +41,35 @@ class StudentModel {
       'name': name,
       'edad': age,
       'phone': phone,
-      'dateOfBirth': dateOfBirth,
-      'dateOfRegister': dateOfRegister,
+      'dateOfBirth': dateOfBirth.toIso8601String(),
+      'dateOfRegister': dateOfRegister.toIso8601String(),
       'obs': obs,
       'ppff': ppff,
       'profesorId': profesorId,
     };
+  }
+
+  StudentModel copyWith({
+    int? id,
+    String? name,
+    int? age,
+    String? phone,
+    DateTime? dateOfBirth,
+    DateTime? dateOfRegister,
+    String? obs,
+    String? ppff,
+    int? profesorId,
+  }) {
+    return StudentModel(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      age: age ?? this.age,
+      phone: phone ?? this.phone,
+      dateOfBirth: dateOfBirth ?? this.dateOfBirth,
+      dateOfRegister: dateOfRegister ?? this.dateOfRegister,
+      obs: obs ?? this.obs,
+      ppff: ppff ?? this.ppff,
+      profesorId: profesorId ?? this.profesorId,
+    );
   }
 }

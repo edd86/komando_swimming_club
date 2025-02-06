@@ -4,6 +4,7 @@ import 'package:komando_swimming_club/core/constants/app_routes.dart';
 import 'package:komando_swimming_club/core/constants/app_theme.dart';
 import 'package:komando_swimming_club/data/data_sources/db_helper.dart';
 import 'package:komando_swimming_club/presentation/provider/proffesor_provider.dart';
+import 'package:komando_swimming_club/presentation/provider/student_provider.dart';
 import 'package:komando_swimming_club/presentation/provider/theme_style_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
@@ -22,6 +23,9 @@ void main() async {
                 ),
                 ChangeNotifierProvider<ProffesorProvider>(
                   create: (context) => ProffesorProvider(db: db),
+                ),
+                ChangeNotifierProvider<StudentProvider>(
+                  create: (context) => StudentProvider(db: db),
                 )
               ],
               child: const MainApp(),

@@ -64,7 +64,8 @@ FOREIGN KEY(cajaId) REFERENCES caja(id));''';
 String sqlAsistencias = '''
 CREATE TABLE asistencias (
 id INTEGER PRIMARY KEY NOT NULL,
-fecha TEXT NOT NULL,
+fecha_ingreso TEXT,
+fecha_salida TEXT,
 obs TEXT,
 estado TEXT CHECK (estado IN('presente', 'ausente', 'licencia')),
 alumnoId INTEGER,

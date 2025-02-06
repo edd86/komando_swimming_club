@@ -4,7 +4,7 @@ import 'package:sizer/sizer.dart';
 
 class AppFonts {
   static titleStyle() => GoogleFonts.firaSansCondensed(
-        fontSize: 25.sp,
+        fontSize: 23.sp,
         fontWeight: FontWeight.w700,
       );
 
@@ -16,5 +16,18 @@ class AppFonts {
   static textButtonStyle() => GoogleFonts.firaSansCondensed(
         fontSize: 15.sp,
         fontWeight: FontWeight.bold,
-  );
+      );
+
+  static textCardTitleStyle() => GoogleFonts.firaSansCondensed(
+        fontSize: 16.5.sp,
+        fontWeight: FontWeight.w700,
+      );
+  static textCardStyle() => GoogleFonts.firaSansCondensed(
+        fontSize: 14.sp,
+        fontWeight: FontWeight.w600,
+      );
+  static textMenuAnchorStyle() => GoogleFonts.firaSansCondensed(
+        fontSize: 12.sp,
+        fontWeight: FontWeight.w600,
+      );
 }

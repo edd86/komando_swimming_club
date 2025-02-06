@@ -45,7 +45,7 @@ class _LoginPageState extends State<LoginPage> {
               height: 5.h,
             ),
             Image.asset(
-              'assets/images/icono.png',
+              'assets/images/logo_comando.png',
               height: 20.h,
             ),
             SizedBox(
