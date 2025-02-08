@@ -1,6 +1,6 @@
 class ExpenseModel {
   int? id;
-  String date;
+  DateTime date;
   double amount;
   String obs;
   int cashId;
@@ -16,8 +16,8 @@ class ExpenseModel {
   factory ExpenseModel.fromJson(Map<String, dynamic> json) {
     return ExpenseModel(
       id: json['id'],
-      date: json['date'],
-      amount: json['amount'],
+      date: DateTime.parse(json['fecha']),
+      amount: json['monto'],
       obs: json['obs'],
       cashId: json['cajaId'],
     );
@@ -26,10 +26,26 @@ class ExpenseModel {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'date': date,
-      'amount': amount,
+      'fecha': date.toIso8601String(),
+      'monto': amount,
       'obs': obs,
       'cajaId': cashId,
     };
+  }
+
+  ExpenseModel copyWith({
+    int? id,
+    DateTime? date,
+    double? amount,
+    String? obs,
+    int? cashId,
+  }) {
+    return ExpenseModel(
+      id: id ?? this.id,
+      date: date ?? this.date,
+      amount: amount ?? this.amount,
+      obs: obs ?? this.obs,
+      cashId: cashId ?? this.cashId,
+    );
   }
 }

@@ -3,6 +3,7 @@ import 'package:komando_swimming_club/presentation/pages/home/home_page.dart';
 import 'package:komando_swimming_club/presentation/pages/login/login_page.dart';
 import 'package:komando_swimming_club/presentation/pages/login/splash_page.dart';
 import 'package:komando_swimming_club/presentation/pages/register/register_user_page.dart';
+import 'package:komando_swimming_club/presentation/widgets/register_money_tabs.dart';
 import 'package:komando_swimming_club/presentation/widgets/register_persons_tabs.dart';
 
 class AppRoutes {
@@ -11,6 +12,7 @@ class AppRoutes {
   static const String splashRoute = '/splash';
   static const String registerUserRoute = '/registerUser';
   static const String registerPersonsRoute = '/registerPersons';
+  static const String registerMoneyRoute = '/registerMoney';
 
   static Map<String, WidgetBuilder> get routes {
     return {
@@ -19,6 +21,7 @@ class AppRoutes {
       splashRoute: (context) => const SplashPage(),
       registerUserRoute: (context) => const RegisterUserPage(),
       registerPersonsRoute: (context) => const RegisterPersonsTabs(),
+      registerMoneyRoute: (context) => const RegisterMoneyTabs(),
     };
   }
 }

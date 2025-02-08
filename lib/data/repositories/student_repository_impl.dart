@@ -37,8 +37,11 @@ class StudentRepositoryImpl implements StudentRepository {
 
   @override
   Future<int> deleteStudent(Student student) async {
-    // TODO: implement deleteStudent in all relational tables
     try {
+      await db.delete('asistencias',
+          where: 'alumnoId = ?', whereArgs: [student.id]);
+      await db
+          .delete('registros', where: 'alumnoId = ?', whereArgs: [student.id]);
       return await db
           .delete('alumnos', where: 'id = ?', whereArgs: [student.id]);
     } catch (e) {

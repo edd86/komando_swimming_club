@@ -1,6 +1,7 @@
 class HistorialRegister {
   int? id;
-  String date;
+  DateTime date;
+  String action;
   int userId;
   int? profesorId;
   int? studentId;
@@ -10,6 +11,7 @@ class HistorialRegister {
   HistorialRegister({
     this.id,
     required this.date,
+    required this.action,
     required this.userId,
     this.profesorId,
     this.studentId,

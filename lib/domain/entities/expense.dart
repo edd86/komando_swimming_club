@@ -1,6 +1,6 @@
 class Expense {
   int? id;
-  String date;
+  DateTime date;
   double amount;
   String obs;
   int cashId;

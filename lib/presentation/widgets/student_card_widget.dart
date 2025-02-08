@@ -124,10 +124,14 @@ class StudentCardWidget extends StatelessWidget {
                           .editStudentAssitanceOut(assistanceOut);
                       if (id != null && id > 0) {
                         GeneralWidgets.showSnackBar(
-                            context, 'Asistencia de salida registrada');
+                            context,
+                            'Asistencia de salida registrada',
+                            themeProvider.isDark);
                       } else {
                         GeneralWidgets.showSnackBar(
-                            context, 'No tiene asistencia de entrada');
+                            context,
+                            'No tiene asistencia de entrada',
+                            themeProvider.isDark);
                       }
                     },
                   ),
@@ -151,11 +155,13 @@ class StudentCardWidget extends StatelessWidget {
                         final notifier = Provider.of<StudentProvider>(context,
                             listen: false);
                         notifier.getStudents();
-                        GeneralWidgets.showSnackBar(
-                            context, 'Estudiante eliminado');
+                        GeneralWidgets.showSnackBar(context,
+                            'Estudiante eliminado', themeProvider.isDark);
                       } else {
                         GeneralWidgets.showSnackBar(
-                            context, 'No se pudo eliminar el estudiante');
+                            context,
+                            'No se pudo eliminar el estudiante',
+                            themeProvider.isDark);
                       }
                     },
                   ),

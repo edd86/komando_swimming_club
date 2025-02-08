@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:komando_swimming_club/core/constants/app_routes.dart';
 import 'package:komando_swimming_club/core/constants/app_theme.dart';
 import 'package:komando_swimming_club/data/data_sources/db_helper.dart';
+import 'package:komando_swimming_club/presentation/provider/cash_provider.dart';
 import 'package:komando_swimming_club/presentation/provider/proffesor_provider.dart';
 import 'package:komando_swimming_club/presentation/provider/student_provider.dart';
 import 'package:komando_swimming_club/presentation/provider/theme_style_provider.dart';
@@ -26,7 +27,10 @@ void main() async {
                 ),
                 ChangeNotifierProvider<StudentProvider>(
                   create: (context) => StudentProvider(db: db),
-                )
+                ),
+                ChangeNotifierProvider<CashProvider>(
+                  create: (context) => CashProvider(db: db),
+                ),
               ],
               child: const MainApp(),
             ),

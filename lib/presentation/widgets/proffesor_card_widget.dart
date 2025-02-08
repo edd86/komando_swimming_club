@@ -25,7 +25,7 @@ class ProffesorCardWidget extends StatelessWidget {
           child: Stack(
             children: [
               SizedBox(
-                height: 18.h,
+                height: 19.h,
                 child: Padding(
                   padding: EdgeInsets.symmetric(
                     horizontal: 5.w,
@@ -41,6 +41,10 @@ class ProffesorCardWidget extends StatelessWidget {
                       ),
                       Text(
                         proffesor.phone,
+                        style: AppFonts.textCardStyle(),
+                      ),
+                      Text(
+                        proffesor.obs != null ? proffesor.obs! : '',
                         style: AppFonts.textCardStyle(),
                       ),
                       Row(
@@ -124,10 +128,14 @@ class ProffesorCardWidget extends StatelessWidget {
                           .editTeacherAssitanceOut(assistanceOut);
                       if (id != null && id > 0) {
                         GeneralWidgets.showSnackBar(
-                            context, 'Asistencia de salida registrada');
+                            context,
+                            'Asistencia de salida registrada',
+                            themeProvider.isDark);
                       } else {
                         GeneralWidgets.showSnackBar(
-                            context, 'No tiene asistencia de entrada');
+                            context,
+                            'No tiene asistencia de entrada',
+                            themeProvider.isDark);
                       }
                     },
                   ),

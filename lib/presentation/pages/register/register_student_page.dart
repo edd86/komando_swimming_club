@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:komando_swimming_club/core/constants/app_fonts.dart';
+import 'package:komando_swimming_club/core/constants/global_variables.dart';
 import 'package:komando_swimming_club/core/utils/conversors.dart';
 import 'package:komando_swimming_club/core/utils/utils.dart';
 import 'package:komando_swimming_club/data/data_sources/db_helper.dart';
+import 'package:komando_swimming_club/data/repositories/historical_register_repository_impl.dart';
 import 'package:komando_swimming_club/data/repositories/student_repository_impl.dart';
+import 'package:komando_swimming_club/domain/entities/historial_register.dart';
 import 'package:komando_swimming_club/domain/entities/proffesor.dart';
 import 'package:komando_swimming_club/domain/entities/student.dart';
 import 'package:komando_swimming_club/presentation/provider/proffesor_provider.dart';
@@ -46,6 +49,7 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
             TextFormField(
               controller: _nameController,
               textCapitalization: TextCapitalization.words,
+              style: AppFonts.textFieldStyle(),
               decoration: InputDecoration(
                 label: Row(
                   children: [
@@ -70,6 +74,7 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
             TextFormField(
               controller: _phoneController,
               keyboardType: TextInputType.phone,
+              style: AppFonts.textFieldStyle(),
               decoration: InputDecoration(
                 label: Row(
                   children: [
@@ -94,6 +99,7 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
             TextFormField(
               controller: _ppffController,
               textCapitalization: TextCapitalization.words,
+              style: AppFonts.textFieldStyle(),
               decoration: InputDecoration(
                 label: Row(
                   children: [
@@ -118,6 +124,7 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
             TextFormField(
               controller: _obsController,
               textCapitalization: TextCapitalization.sentences,
+              style: AppFonts.textFieldStyle(),
               maxLines: 3,
               decoration: InputDecoration(
                 label: Row(
@@ -206,11 +213,11 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
               ],
             ),
             Consumer<ThemeStyleProvider>(
-              builder: (context, value, child) => ElevatedButton.icon(
+              builder: (context, themeProvider, child) => ElevatedButton.icon(
                 label: Text('Registrar Estudiante'),
                 icon: Icon(
                   Icons.save,
-                  color: value.isDark ? Colors.black : Colors.white,
+                  color: themeProvider.isDark ? Colors.black : Colors.white,
                 ),
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
@@ -228,9 +235,20 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
                     );
                     final student = await studentRepo.addStudent(newStundent);
                     if (student != null && student.id != null) {
-                      _studentAdded();
+                      _studentAdded(themeProvider.isDark);
+                      final historicalRegisterRepo =
+                          HistorialRegisterRepositoryImpl(
+                              db: await DbHelper().db);
+                      final newhistorical = HistorialRegister(
+                          date: DateTime.now(),
+                          action: 'Registro Estudiante, ${student.name}',
+                          userId: userLogged!.id!,
+                          studentId: student.id);
+                      await historicalRegisterRepo.addHistorialRegister(newhistorical);
                     } else {
-                      student == null ? _studentError() : _studentNotAdded();
+                      student == null
+                          ? _studentError(themeProvider.isDark)
+                          : _studentNotAdded(themeProvider.isDark);
                     }
                   }
                 },
@@ -268,18 +286,20 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
     }
   }
 
-  void _studentAdded() {
-    GeneralWidgets.showSnackBar(context, 'Estudiante registrado');
+  void _studentAdded(bool isDark) {
+    GeneralWidgets.showSnackBar(context, 'Estudiante registrado', isDark);
     final notifier = Provider.of<StudentProvider>(context, listen: false);
     notifier.getStudents();
     Navigator.pop(context);
   }
 
-  _studentError() {
-    GeneralWidgets.showSnackBar(context, 'Error al registrar el estudiante');
+  _studentError(bool isDark) {
+    GeneralWidgets.showSnackBar(
+        context, 'Error al registrar el estudiante', isDark);
   }
 
-  _studentNotAdded() {
-    GeneralWidgets.showSnackBar(context, 'No se pudo registrar el estudiante');
+  _studentNotAdded(bool isDark) {
+    GeneralWidgets.showSnackBar(
+        context, 'No se pudo registrar el estudiante', isDark);
   }
 }

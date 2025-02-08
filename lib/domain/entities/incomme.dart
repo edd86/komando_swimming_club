@@ -1,6 +1,6 @@
 class Incomme {
   int? id;
-  String date;
+  DateTime date;
   double amount;
   String obs;
   int cajaId;

@@ -211,9 +211,9 @@ class _RegisterPageState extends State<RegisterUserPage> {
                         );
                         final user = await userRepo.addUser(newUser);
                         if (user != null) {
-                          _userAdded(user);
+                          _userAdded(user, themeProvider.isDark);
                         } else {
-                          _userError();
+                          _userError(themeProvider.isDark);
                         }
                       }
                     },
@@ -227,12 +227,14 @@ class _RegisterPageState extends State<RegisterUserPage> {
     );
   }
 
-  void _userAdded(User user) {
-    GeneralWidgets.showSnackBar(context, 'Usuario ${user.userName} registrado');
+  void _userAdded(User user, bool isDark) {
+    GeneralWidgets.showSnackBar(
+        context, 'Usuario ${user.userName} registrado', isDark);
     Navigator.pop(context);
   }
 
-  void _userError() {
-    GeneralWidgets.showSnackBar(context, 'Error al registrar el usuario');
+  void _userError(bool isDark) {
+    GeneralWidgets.showSnackBar(
+        context, 'Error al registrar el usuario', isDark);
   }
 }

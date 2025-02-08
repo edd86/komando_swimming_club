@@ -20,4 +20,14 @@ class CashModel {
       'monto': amount,
     };
   }
+
+  CashModel copyWith({
+    int? id,
+    double? amount,
+  }) {
+    return CashModel(
+      id: id ?? this.id,
+      amount: amount ?? this.amount,
+    );
+  }
 }

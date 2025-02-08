@@ -34,3 +34,15 @@ class Destinations {
     ),
   ];
 }
+
+class Transactions {
+  double amount;
+  DateTime date;
+  String description;
+
+  Transactions({
+    required this.amount,
+    required this.date,
+    required this.description,
+  });
+}

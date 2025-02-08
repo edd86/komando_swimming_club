@@ -2,10 +2,13 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:komando_swimming_club/core/constants/app_fonts.dart';
+import 'package:komando_swimming_club/core/constants/global_variables.dart';
 import 'package:komando_swimming_club/core/utils/conversors.dart';
 import 'package:komando_swimming_club/core/utils/utils.dart';
 import 'package:komando_swimming_club/data/data_sources/db_helper.dart';
+import 'package:komando_swimming_club/data/repositories/historical_register_repository_impl.dart';
 import 'package:komando_swimming_club/data/repositories/proffessor_repository_impl.dart';
+import 'package:komando_swimming_club/domain/entities/historial_register.dart';
 import 'package:komando_swimming_club/domain/entities/proffesor.dart';
 import 'package:komando_swimming_club/presentation/provider/proffesor_provider.dart';
 import 'package:komando_swimming_club/presentation/provider/theme_style_provider.dart';
@@ -192,9 +195,19 @@ class _RegisterProffesorPageState extends State<RegisterProffesorPage> {
                       final proffesor =
                           await proffeRepo.addProffesor(newProffesor);
                       if (proffesor != null && proffesor.id != null) {
-                        _proffesorRegistered();
+                        final historialRegisterRepo =
+                            HistorialRegisterRepositoryImpl(
+                                db: await DbHelper().db);
+                        final newhistorical = HistorialRegister(
+                            date: DateTime.now(),
+                            action: 'Registro Profesor, ${proffesor.name}',
+                            userId: userLogged!.id!,
+                            profesorId: proffesor.id);
+                        await historialRegisterRepo
+                            .addHistorialRegister(newhistorical);
+                        _proffesorRegistered(themeProvider.isDark);
                       } else {
-                        _proffesorNotRegistered();
+                        _proffesorNotRegistered(themeProvider.isDark);
                       }
                     }
                   },
@@ -218,7 +231,7 @@ class _RegisterProffesorPageState extends State<RegisterProffesorPage> {
         _beginDate = picked;
       });
     } else {
-      _showCustomSnackBar(true);
+      _showCustomSnackBar(true, true);
     }
   }
 
@@ -233,24 +246,27 @@ class _RegisterProffesorPageState extends State<RegisterProffesorPage> {
         _dateOfBirth = picked;
       });
     } else {
-      _showCustomSnackBar(false);
+      _showCustomSnackBar(false, false);
     }
   }
 
-  void _showCustomSnackBar(bool bool) {
+  void _showCustomSnackBar(bool bool, isDark) {
     bool
-        ? GeneralWidgets.showSnackBar(context, 'Fecha de inicio inválida')
-        : GeneralWidgets.showSnackBar(context, 'Fecha de nacimiento inválida');
+        ? GeneralWidgets.showSnackBar(
+            context, 'Fecha de inicio inválida', isDark)
+        : GeneralWidgets.showSnackBar(
+            context, 'Fecha de nacimiento inválida', isDark);
   }
 
-  void _proffesorRegistered() {
+  void _proffesorRegistered(bool isDark) {
     final notifier = Provider.of<ProffesorProvider>(context, listen: false);
     notifier.getProffesors();
-    GeneralWidgets.showSnackBar(context, 'Profesor registrado');
+    GeneralWidgets.showSnackBar(context, 'Profesor registrado', isDark);
     Navigator.pop(context);
   }
 
-  void _proffesorNotRegistered() {
-    GeneralWidgets.showSnackBar(context, 'Error al registrar el profesor');
+  void _proffesorNotRegistered(bool isDark) {
+    GeneralWidgets.showSnackBar(
+        context, 'Error al registrar el profesor', isDark);
   }
 }

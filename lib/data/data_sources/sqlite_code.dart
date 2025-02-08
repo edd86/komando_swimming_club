@@ -77,6 +77,7 @@ String sqlRegistros = '''
 CREATE TABLE registros (
 id INTEGER PRIMARY KEY NOT NULL,
 fecha TEXT NOT NULL,
+action TEXT NOT NULL,
 userId INTEGER NOT NULL,
 profesorId INTEGER ,
 alumnoId INTEGER,
@@ -87,3 +88,4 @@ FOREIGN KEY(profesorId) REFERENCES profesor(id),
 FOREIGN KEY(alumnoId) REFERENCES alumno(id),
 FOREIGN KEY(ingresoId) REFERENCES ingresos(id),
 FOREIGN KEY(egresoId) REFERENCES egreso(id));''';
+

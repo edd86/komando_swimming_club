@@ -134,12 +134,12 @@ class _LoginPageState extends State<LoginPage> {
                               if (response) {
                                 userLogged = await userRepo.getUserByUserName(
                                     _usernameController.text);
-                                _loginUser();
+                                _loginUser(themeProvider.isDark);
                               } else {
-                                _loginNotUser();
+                                _loginNotUser(themeProvider.isDark);
                               }
                             } else {
-                              _loginError();
+                              _loginError(themeProvider.isDark);
                             }
                           },
                         );
@@ -179,16 +179,17 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void _loginUser() {
-    GeneralWidgets.showSnackBar(context, 'Bienvenido a Komando');
+  void _loginUser(bool isDark) {
+    GeneralWidgets.showSnackBar(context, 'Bienvenido a Komando', isDark);
     Navigator.pushNamed(context, AppRoutes.homeRoute);
   }
 
-  void _loginError() {
-    GeneralWidgets.showSnackBar(context, 'Error al iniciar sesión');
+  void _loginError(bool isDark) {
+    GeneralWidgets.showSnackBar(context, 'Error al iniciar sesión', isDark);
   }
 
-  void _loginNotUser() {
-    GeneralWidgets.showSnackBar(context, 'Usuario o contraseña incorrectos');
+  void _loginNotUser(bool isDark) {
+    GeneralWidgets.showSnackBar(
+        context, 'Usuario o contraseña incorrectos', isDark);
   }
 }

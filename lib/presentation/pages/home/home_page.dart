@@ -5,6 +5,7 @@ import 'package:komando_swimming_club/core/constants/global_variables.dart';
 import 'package:komando_swimming_club/presentation/pages/cash/cash_page.dart';
 import 'package:komando_swimming_club/presentation/pages/proffesor/proffesors_page.dart';
 import 'package:komando_swimming_club/presentation/pages/student/students_page.dart';
+import 'package:komando_swimming_club/presentation/widgets/drawer_widget.dart';
 import 'package:komando_swimming_club/presentation/widgets/general_widgets.dart';
 
 class HomePage extends StatefulWidget {
@@ -20,7 +21,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: GeneralWidgets.customAppBar(context, 'Komando Swimming Club'),
-      drawer: Drawer(),
+      drawer: DrawerWidget(),
       bottomNavigationBar: NavigationBar(
         selectedIndex: _currentIndex,
         destinations: Destinations.destinations
@@ -55,7 +56,9 @@ class _HomePageState extends State<HomePage> {
           FloatingActionButton(
             heroTag: 'btnMoney',
             child: Icon(FontAwesomeIcons.moneyCheckDollar),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, AppRoutes.registerMoneyRoute);
+            },
           ),
         ],
       ),

@@ -30,4 +30,9 @@ class AppFonts {
         fontSize: 12.sp,
         fontWeight: FontWeight.w600,
       );
+  static textCashPositiveStyle() => GoogleFonts.firaSansCondensed(
+      fontSize: 16.5.sp, fontWeight: FontWeight.w600, color: Colors.white);
+
+  static textCashNegativeStyle() => GoogleFonts.firaSansCondensed(
+      fontSize: 16.5.sp, fontWeight: FontWeight.w600, color: Colors.black);
 }
