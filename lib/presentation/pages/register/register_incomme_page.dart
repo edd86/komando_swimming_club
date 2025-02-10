@@ -11,6 +11,7 @@ import 'package:komando_swimming_club/domain/entities/cash.dart';
 import 'package:komando_swimming_club/domain/entities/historial_register.dart';
 import 'package:komando_swimming_club/domain/entities/incomme.dart';
 import 'package:komando_swimming_club/presentation/provider/cash_provider.dart';
+import 'package:komando_swimming_club/presentation/provider/register_reports_provider.dart';
 import 'package:komando_swimming_club/presentation/provider/theme_style_provider.dart';
 import 'package:komando_swimming_club/presentation/widgets/general_widgets.dart';
 import 'package:provider/provider.dart';
@@ -166,8 +167,11 @@ class _RegisterIncommePageState extends State<RegisterIncommePage> {
   void _incommeAdded(bool isDark) {
     GeneralWidgets.showSnackBar(context, 'Ingreso registrado', isDark);
     final notifier = Provider.of<CashProvider>(context, listen: false);
+    final notifierHistorial =
+        Provider.of<RegisterReportsProvider>(context, listen: false);
     notifier.getTransactions();
     notifier.getAmount();
+    notifierHistorial.getHistorialRegisters();
     Navigator.pop(context);
   }
 

@@ -1,33 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:komando_swimming_club/core/constants/global_variables.dart';
-import 'package:komando_swimming_club/data/repositories/cash_repository_impl.dart';
 import 'package:komando_swimming_club/data/repositories/expense_repository_impl.dart';
 import 'package:komando_swimming_club/data/repositories/incomme_repository_impl.dart';
 import 'package:sqflite/sqflite.dart';
 
-class CashProvider extends ChangeNotifier {
+class TransactionReportProvider extends ChangeNotifier {
   final Database db;
 
-  CashProvider({required this.db}) {
-    getAmount();
-    getTransactions();
-  }
+  TransactionReportProvider({required this.db});
 
-  double _amount = 0.0;
   List<Transactions> _transactions = [];
+  double _amount = 0.0;
 
-  double get amount => _amount;
   List<Transactions> get transactions => _transactions;
+  double get amount => _amount;
 
-  getAmount() async {
-    final cash = await CashRepositoryImpl(db: db).getCash();
-    if (cash != null) {
-      _amount = cash.amount;
-      notifyListeners();
-    }
-  }
-
-  getTransactions() async {
+  getTransactions(DateTime initDate, DateTime endDate) async {
     List<Transactions> transactionsTemp = [];
     final incommes = await IncommeRepositoryImpl(db: db).getIncommes();
     final expenses = await ExpenseRepositoryImpl(db: db).getExpenses();
@@ -48,8 +36,18 @@ class CashProvider extends ChangeNotifier {
           type: 'expense',
         ));
       }
-      transactionsTemp.sort((a, b) => b.date.compareTo(a.date));
-      _transactions = transactionsTemp;
+      final transactionsSelected = transactionsTemp.where((trans) {
+        return trans.date.isAfter(initDate.subtract(Duration(seconds: 1))) &&
+            trans.date.isBefore(endDate.add(Duration(hours: 1)));
+      }).toList();
+      _transactions = transactionsSelected;
+      _amount = transactionsSelected.fold(0.0, (prev, element) {
+        if (element.type == 'income') {
+          return prev + element.amount;
+        } else {
+          return prev - element.amount;
+        }
+      });
       notifyListeners();
     } else {
       _transactions = [];

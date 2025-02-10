@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:komando_swimming_club/core/constants/app_fonts.dart';
 import 'package:komando_swimming_club/presentation/provider/cash_provider.dart';
+import 'package:komando_swimming_club/presentation/widgets/transaction_card_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
@@ -48,10 +49,7 @@ class CashPage extends StatelessWidget {
             return ListView.builder(
               itemCount: transactions.length,
               itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(transactions[index].description),
-                  trailing: Text(transactions[index].amount.toString(),),
-                );
+                return TransactionCardWidget(transaction: transactions[index]);
               },
             );
           }),

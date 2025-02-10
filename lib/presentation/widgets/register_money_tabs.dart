@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:komando_swimming_club/presentation/pages/register/register_expense_page.dart';
 import 'package:komando_swimming_club/presentation/pages/register/register_incomme_page.dart';
 
 class RegisterMoneyTabs extends StatelessWidget {
@@ -22,7 +23,7 @@ class RegisterMoneyTabs extends StatelessWidget {
         body: TabBarView(
           children: [
             RegisterIncommePage(),
-            Container(),
+            RegisterExpensePage(),
           ],
         ),
       ),

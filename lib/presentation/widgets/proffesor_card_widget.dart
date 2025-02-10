@@ -6,6 +6,7 @@ import 'package:komando_swimming_club/data/data_sources/db_helper.dart';
 import 'package:komando_swimming_club/data/repositories/assitance_repository_impl.dart';
 import 'package:komando_swimming_club/domain/entities/assistance.dart';
 import 'package:komando_swimming_club/domain/entities/proffesor.dart';
+import 'package:komando_swimming_club/presentation/pages/proffesor/proffesor_edit_page.dart';
 import 'package:komando_swimming_club/presentation/provider/theme_style_provider.dart';
 import 'package:komando_swimming_club/presentation/widgets/assistant_dialog_widget.dart';
 import 'package:komando_swimming_club/presentation/widgets/general_widgets.dart';
@@ -144,7 +145,13 @@ class ProffesorCardWidget extends StatelessWidget {
                       'Editar',
                       style: AppFonts.textMenuAnchorStyle(),
                     ),
-                    onPressed: () {},
+                    onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            ProffesorEditPage(proffesor: proffesor),
+                      ),
+                    ),
                   ),
                   MenuItemButton(
                     child: Text(

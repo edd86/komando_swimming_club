@@ -17,7 +17,6 @@ class IncommeRepositoryImpl implements IncommeRepository {
         IncommeMapper().incommeToModel(incomme).copyWith(id: id),
       );
     } catch (e) {
-      print(e.toString());
       return null;
     }
   }

@@ -89,7 +89,6 @@ class AssitanceRepositoryImpl implements AssistanceRepository {
       }
       return 0;
     } catch (e) {
-      print(e.toString());
       return null;
     }
   }

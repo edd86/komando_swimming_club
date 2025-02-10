@@ -5,8 +5,10 @@ import 'package:komando_swimming_club/core/constants/app_theme.dart';
 import 'package:komando_swimming_club/data/data_sources/db_helper.dart';
 import 'package:komando_swimming_club/presentation/provider/cash_provider.dart';
 import 'package:komando_swimming_club/presentation/provider/proffesor_provider.dart';
+import 'package:komando_swimming_club/presentation/provider/register_reports_provider.dart';
 import 'package:komando_swimming_club/presentation/provider/student_provider.dart';
 import 'package:komando_swimming_club/presentation/provider/theme_style_provider.dart';
+import 'package:komando_swimming_club/presentation/provider/transaction_report_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
@@ -30,6 +32,12 @@ void main() async {
                 ),
                 ChangeNotifierProvider<CashProvider>(
                   create: (context) => CashProvider(db: db),
+                ),
+                ChangeNotifierProvider<RegisterReportsProvider>(
+                  create: (context) => RegisterReportsProvider(db: db),
+                ),
+                ChangeNotifierProvider(
+                  create: (context) => TransactionReportProvider(db: db),
                 ),
               ],
               child: const MainApp(),

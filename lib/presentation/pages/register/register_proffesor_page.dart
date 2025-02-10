@@ -11,6 +11,7 @@ import 'package:komando_swimming_club/data/repositories/proffessor_repository_im
 import 'package:komando_swimming_club/domain/entities/historial_register.dart';
 import 'package:komando_swimming_club/domain/entities/proffesor.dart';
 import 'package:komando_swimming_club/presentation/provider/proffesor_provider.dart';
+import 'package:komando_swimming_club/presentation/provider/register_reports_provider.dart';
 import 'package:komando_swimming_club/presentation/provider/theme_style_provider.dart';
 import 'package:komando_swimming_club/presentation/widgets/general_widgets.dart';
 import 'package:provider/provider.dart';
@@ -260,7 +261,10 @@ class _RegisterProffesorPageState extends State<RegisterProffesorPage> {
 
   void _proffesorRegistered(bool isDark) {
     final notifier = Provider.of<ProffesorProvider>(context, listen: false);
+    final reportNotifier =
+        Provider.of<RegisterReportsProvider>(context, listen: false);
     notifier.getProffesors();
+    reportNotifier.getHistorialRegisters();
     GeneralWidgets.showSnackBar(context, 'Profesor registrado', isDark);
     Navigator.pop(context);
   }

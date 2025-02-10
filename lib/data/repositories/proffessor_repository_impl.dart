@@ -33,4 +33,18 @@ class ProffessorRepositoryImpl extends ProffesorRepository {
       return null;
     }
   }
+
+  @override
+  Future<int?> updateProffesor(Proffesor proffesor) async {
+    try {
+      return await db.update(
+        'profesores',
+        ProffessorMapper().proffesorToProffesorModel(proffesor).toJson(),
+        where: 'id = ?',
+        whereArgs: [proffesor.id],
+      );
+    } catch (e) {
+      return null;
+    }
+  }
 }

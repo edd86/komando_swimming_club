@@ -1,7 +1,7 @@
 name: komando_swimming_club
-description: "A new Flutter project."
-publish_to: 'none'
-version: 0.1.0
+description: "Project for Komando Swimming Club"
+publish_to: "none"
+version: 1.0.0
 
 environment:
   sdk: ^3.6.1

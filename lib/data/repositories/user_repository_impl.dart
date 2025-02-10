@@ -64,4 +64,36 @@ class UserRepositoryImpl implements UserRepository {
       return null;
     }
   }
+
+  @override
+  Future<int?> updateUser(User user) async {
+    try {
+      final cont = await db.update(
+        'users',
+        UserMapper().userToUserModel(user).toJson(),
+        where: 'id = ?',
+        whereArgs: [user.id],
+      );
+      return cont;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  @override
+  Future<User?> getUserById(int id) async {
+    try {
+      final userResponse =
+          await db.query('users', where: 'id = ?', whereArgs: [id]);
+      if (userResponse.isNotEmpty) {
+        final user = UserMapper()
+            .userModelToUser(UserModel.fromJson(userResponse.first));
+        return user;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      return null;
+    }
+  }
 }
