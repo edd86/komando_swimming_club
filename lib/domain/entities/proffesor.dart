@@ -17,3 +17,14 @@ class Proffesor {
     this.obs,
   });
 }
+
+final profeJuan = Proffesor(
+    name: 'Juan Perez',
+    age: 55,
+    phone: '72569887',
+    dateOfBirth: DateTime.now(),
+    beginDate: DateTime.now());
+
+final edad = profeJuan.age;
+
+List<Proffesor> proffesors = [];

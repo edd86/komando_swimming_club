@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:komando_swimming_club/core/constants/app_routes.dart';
 import 'package:komando_swimming_club/core/constants/app_theme.dart';
+import 'package:komando_swimming_club/core/utils/utils.dart';
 import 'package:komando_swimming_club/data/data_sources/db_helper.dart';
 import 'package:komando_swimming_club/presentation/provider/cash_provider.dart';
 import 'package:komando_swimming_club/presentation/provider/proffesor_provider.dart';
@@ -16,6 +17,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final DbHelper dbHelper = DbHelper();
   final db = await dbHelper.db;
+  Utils().updateAges(db);
   SystemChrome.setPreferredOrientations(
           [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown])
       .then((_) => runApp(

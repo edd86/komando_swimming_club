@@ -48,4 +48,15 @@ class StudentRepositoryImpl implements StudentRepository {
       return 0;
     }
   }
+
+  @override
+  Future<int?> updateStudent(Student student) async {
+    try {
+      return await db.update(
+          'alumnos', StudentMapper().studentToModel(student).toJson(),
+          where: 'id = ?', whereArgs: [student.id]);
+    } catch (e) {
+      return 0;
+    }
+  }
 }

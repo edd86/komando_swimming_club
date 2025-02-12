@@ -21,27 +21,29 @@ class TransactionReportProvider extends ChangeNotifier {
     final expenses = await ExpenseRepositoryImpl(db: db).getExpenses();
     if (incommes != null && expenses != null) {
       for (var incomme in incommes) {
-        transactionsTemp.add(Transactions(
-          amount: incomme.amount,
-          date: incomme.date,
-          description: incomme.obs,
-          type: 'income',
-        ));
+        if (incomme.date.isAfter(initDate.subtract(Duration(hours: 24))) &&
+            incomme.date.isBefore(endDate.add(Duration(hours: 24)))) {
+          transactionsTemp.add(Transactions(
+            amount: incomme.amount,
+            date: incomme.date,
+            description: incomme.obs,
+            type: 'income',
+          ));
+        }
       }
       for (var expense in expenses) {
-        transactionsTemp.add(Transactions(
-          amount: expense.amount,
-          date: expense.date,
-          description: expense.obs,
-          type: 'expense',
-        ));
+        if (expense.date.isAfter(initDate.subtract(Duration(hours: 24))) &&
+            expense.date.isBefore(initDate.add(Duration(hours: 24)))) {
+          transactionsTemp.add(Transactions(
+            amount: expense.amount,
+            date: expense.date,
+            description: expense.obs,
+            type: 'expense',
+          ));
+        }
       }
-      final transactionsSelected = transactionsTemp.where((trans) {
-        return trans.date.isAfter(initDate.subtract(Duration(seconds: 1))) &&
-            trans.date.isBefore(endDate.add(Duration(hours: 1)));
-      }).toList();
-      _transactions = transactionsSelected;
-      _amount = transactionsSelected.fold(0.0, (prev, element) {
+      _transactions = transactionsTemp;
+      _amount = transactionsTemp.fold(0.0, (prev, element) {
         if (element.type == 'income') {
           return prev + element.amount;
         } else {
